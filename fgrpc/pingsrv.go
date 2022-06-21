@@ -54,6 +54,8 @@ func (s *pingSrv) Ping(c context.Context, in *PingMessage) (*PingMessage, error)
 	return &out, nil
 }
 
+func (s *pingSrv) mustEmbedUnimplementedPingServerServer() {}
+
 // PingServer starts a grpc ping (and health) echo server.
 // returns the port being bound (useful when passing "0" as the port to
 // get a dynamic server). Pass the healthServiceName to use for the
@@ -106,7 +108,7 @@ func PingServerTCP(port, cert, key, healthServiceName string, maxConcurrentStrea
 
 // PingClientCall calls the ping service (presumably running as PingServer on
 // the destination). returns the average round trip in seconds.
-func PingClientCall(serverAddr string, n int, payload string, delay time.Duration, tlsOpts *fhttp.TLSOptions) (float64, error) {
+func PingClientCall(serverAddr string, n int, payload []byte, delay time.Duration, tlsOpts *fhttp.TLSOptions) (float64, error) {
 	o := GRPCRunnerOptions{Destination: serverAddr, TLSOptions: *tlsOpts}
 	conn, err := Dial(&o) // somehow this never seem to error out, error comes later
 	if err != nil {

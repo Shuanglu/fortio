@@ -116,7 +116,7 @@ type GRPCRunnerOptions struct {
 	Destination        string
 	Service            string        // Service to be checked when using grpc health check
 	Profiler           string        // file to save profiles to. defaults to no profiling
-	Payload            string        // Payload to be sent for grpc ping service
+	Payload            []byte        // Payload to be sent for grpc ping service
 	Streams            int           // number of streams. total go routines and data streams will be streams*numthreads.
 	Delay              time.Duration // Delay to be sent when using grpc ping service
 	CertOverride       string        // Override the cert virtual host of authority for testing
